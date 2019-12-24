@@ -1,0 +1,38 @@
+<% provide(:title, '登録') %>
+
+<div class="submit-form">
+  <div class="left">
+  <%= form_for(@user) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+  
+    <div class="cp_iptxt">
+    	<%= f.text_field :name, placeholder: "お名前(10文字以下)" %>
+    	<i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+    
+    
+    <div class="cp_iptxt">
+    	<%= f.email_field :email,  placeholder: "E-Mail" %>
+    	<i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+    
+    <div class="cp_iptxt">
+    	<%= f.password_field :password,  placeholder: "パスワード(6文字以上)" %>
+    	<i class="fas fa-key fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+    <div class="cp_iptxt">
+    	<%= f.password_field :password_confirmation,  placeholder: "パスワードの確認" %>
+    	<i class="fas fa-key fa-lg fa-fw" aria-hidden="true"></i>
+    </div>
+    <%= f.submit "登録", class: "btn-gradient-3d sub-bt" %>
+  <% end %>
+  </div>
+</div>
+      
+
+
+
+<style>
+
+
+</style>

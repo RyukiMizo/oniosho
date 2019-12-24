@@ -1,0 +1,221 @@
+<% if logged_in? %>
+<h1 class="first">俳句で繋がる</h1>
+<p class="red">※6~18文字以内</p>
+<div class="row">
+  <div class="col-md-3">
+    <%= form_for(@post) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%= f.text_area :content, :class => "content1", :id => "texta", :size => "600x50" %><br />
+      <div class="btn-gradient-3d click">縦に変換</div>
+      <br />
+      <textarea id="txtbox" rows="600" cols="50" class = "content2"></textarea>
+      <br /><br /><br />
+      <div class="circle-button">
+        <button id="tweet" class="btn-circle-border-simple"><i class="fab fa-twitter"></i> ツイート</button>
+        <%= f.submit "投稿する", class: "btn-circle-border-simple sub" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="col-md-3">
+    <div class="paper-class">
+      <%= image_tag "paper.png", size: "150x450", id: "paper" %>
+    </div>
+    <div id="paper-result"></div>
+  </div>
+
+<% else %>
+  <h1 class="first">俳句で繋がる</h1>
+  <div class="row not-login">
+  　<div class="col-md-3">
+      <textarea rows="600" cols="50" class="content3" id="texta1" name="test1"></textarea>
+      <br />
+      <div class="btn-gradient-3d click1">縦に変換</div>
+      <br>
+      <textarea rows="600" cols="50" class="content4" id="txtbox1"></textarea><br />
+      <button id="tweet1"class="btn btn-primary"><i class="fab fa-twitter"></i> ツイート</button>
+    </div>
+    <div class="col-md-3">
+      <%= image_tag "paper.png", size: "150x450", id: "paper1" %>
+      <div id="paper-result1"></div>
+    </div>
+  </div>
+<% end %>
+
+
+<!-- 最初のスクリプト -->
+<script>
+    document.getElementById("tweet").addEventListener('click', function(event) {
+        event.preventDefault();
+        var left = Math.round(window.screen.width / 2 - 275);
+        var top = (window.screen.height > 420) ? Math.round(window.screen.height / 2 - 210) : 0;
+        window.open(
+            "https://twitter.com/intent/tweet?text=" + encodeURIComponent(document.getElementById("txtbox").value),
+            null,
+            "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=550,height=420,left=" + left + ",top=" + top);
+    });
+</script>
+
+
+
+
+
+<script>
+  var toFullWidth = function(value) {
+    if (!value) return value;
+    return String(value).replace(/[!-~]/g, function(all) {
+        return String.fromCharCode(all.charCodeAt(0) + 0xFEE0);
+    });
+  };
+  $(".click").click(function(){
+    var con = $(".content1").val();
+    con = con.split(/\n/g);
+    
+    var max_vert = Math.max.apply(null,con.map(function(value){
+      return (value.length);
+    }));
+    
+    var e = "";
+    
+    for(var i=0;  i < max_vert;  i++){
+      for (var p = con.length - 1; p > -1; p--) {
+        var content = con[p];
+        if(content.length === 0){
+          e += "　"
+        }else{
+          var one_char = content.split("")[i];
+          
+          if(one_char !== undefined){
+            e += one_char
+          }else{
+            e += "　"
+          }
+        }
+      }
+      e += "\n"
+    }
+    var k = toFullWidth(e)+"\n"+"https://haikubeta.herokuapp.com/"+"\n"+"#俳句で繋がる";
+    k = k.replace(/ー/g, "│").replace(/）/g, "︶").replace(/（/g, "⌒")
+
+    $(".content2").text(k);
+  });
+</script>
+
+
+
+
+
+<script type="text/javascript">
+  var str = "古池や\n蛙飛びこむ\n水の音";
+  $("#texta").text(str);
+</script>
+
+<script type="text/javascript">
+  var str = "水蛙古\nの飛池\n音びや\n　込　\n　む　";
+  $("#txtbox").text(str);
+</script>
+
+<script>
+  $(document).ready(function(){
+    var str1 = $('textarea[name="post[content]"').val();
+    $("#paper-result").html("<span class='paper-cha'>" + str1 + "</span>")
+    $('#texta').on('keyup', function() {
+      
+      str1 = $('textarea[name="post[content]"').val();
+      $("#paper-result").html("<span class='paper-cha'>" + str1 + "</span>")
+    });
+  });
+</script>
+
+
+
+<!-- 2番目ののスクリプト -->
+
+<script>
+  var toFullWidth = function(value) {
+    if (!value) return value;
+    return String(value).replace(/[!-~]/g, function(all) {
+        return String.fromCharCode(all.charCodeAt(0) + 0xFEE0);
+    });
+  };
+  $(".click1").click(function(){
+    var con = $(".content3").val();
+    con = con.split(/\n/g);
+    
+    var max_vert = Math.max.apply(null,con.map(function(value){
+      return (value.length);
+    }));
+    
+    var e = "";
+    
+    for(var i=0;  i < max_vert;  i++){
+      for (var p = con.length - 1; p > -1; p--) {
+        var content = con[p];
+        if(content.length === 0){
+          e += "　"
+        }else{
+          var one_char = content.split("")[i];
+          
+          if(one_char !== undefined){
+            e += one_char
+          }else{
+            e += "　"
+          }
+        }
+      }
+      e += "\n"
+    }
+    var k = toFullWidth(e)+"\n"+"https://haikubeta.herokuapp.com/"+"\n"+"#俳句で繋がる";
+    k = k.replace(/ー/g, "│").replace(/）/g, "︶").replace(/（/g, "⌒")
+
+    $(".content4").text(k);
+  });
+</script>
+
+<script>
+    document.getElementById("tweet1").addEventListener('click', function(event) {
+        event.preventDefault();
+        var left = Math.round(window.screen.width / 2 - 275);
+        var top = (window.screen.height > 420) ? Math.round(window.screen.height / 2 - 210) : 0;
+        window.open(
+            "https://twitter.com/intent/tweet?text=" + encodeURIComponent(document.getElementById("txtbox1").value),
+            null,
+            "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=550,height=420,left=" + left + ",top=" + top);
+    });
+</script>
+
+
+<script type="text/javascript">
+  var str = "古池や\n蛙飛びこむ\n水の音";
+  $(".content3").text(str);
+</script>
+
+<script type="text/javascript">
+  var str = "水蛙古\nの飛池\n音びや\n　込　\n　む　";
+  $(".content4").text(str);
+</script>
+
+<script>
+  $(document).ready(function(){
+    var str1 = $('textarea[name="test1"]').val();
+    $("#paper-result1").html("<span class='paper-cha'>" + str1 + "</span>")
+    $('#texta1').on('keyup', function() {
+      
+      str1 = $('textarea[name="test1"]').val();
+      $("#paper-result1").html("<span class='paper-cha'>" + str1 + "</span>")
+    });
+  });
+</script>
+
+<style>
+  
+  .container2{
+  background-image: url("<%= asset_path('background.jpg') %>");
+  background-repeat:  no-repeat;
+  background-position:center center;
+  background-size: contain;
+  width:100%;
+}
+
+</style>
+

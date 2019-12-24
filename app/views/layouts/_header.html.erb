@@ -1,0 +1,116 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <nav class="nav-head">
+    <%= link_to root_path do %>
+      <%= image_tag("logo3.png", size: '180x32',class: "logo") %>
+    <% end %>
+    
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class ="search">
+          <div id="search-box">
+            <%= form_tag(search_posts_path, method: :get, id: "form2",
+            :data => {:toggle=>"popover", :content => ""},) do %>
+              <%= text_field_tag :search, "", id: "form1", class: "search__query", 
+              name: "keyword", placeholder: "俳句を検索",autocomplete: "off" %>
+              <div id="search_result"></div>
+              <%= button_tag '検索', class: 'btn-gradient-3d-orange search-btn' %>
+            <% end %>
+          </div>
+        </li>
+        
+        <li class="home-use">
+          <%= link_to "ヘルプ", help_path %>
+        </li>
+        
+        <% if logged_in? %>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            アカウント <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "プロフィール", current_user %></li>
+            <li><%= link_to "設定", edit_user_path(current_user) %></li>
+            <li class="divider"></li>
+            <li>
+              <%= link_to "ログアウト", logout_path, method: :delete %>
+            </li>
+        <% else %>
+          <li class="login">
+            <%= link_to login_path do %>
+              <i class="fas fa-sign-in-alt fa-x"></i>ログイン
+            <% end %>
+          </li>
+          
+          <li class="sign-up">
+            <%= link_to "新規登録", signup_path %>
+          </li>
+          
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<style>
+  .logo3 {
+    margin-left: 20px;
+  }
+</style>
+
+<style>
+
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 20px;
+}
+#jquery-ui-autocomplete label {
+    float: left;
+    margin-right: 0.5em;
+    color: black;
+    font-size: 15px;
+}
+
+</style>
+
+<script>
+  /* global $ */
+$(document).ready(function(){
+  var
+  preFunc = null,
+  preInput = '',
+  input = '',
+  ajaxSearch = function(input) {
+    $.ajax({
+      url: "/posts/search_js",
+      type: "GET",
+      data: ("keyword=" + input)
+    });
+  };
+  $('#form1').on('keyup', function() {
+    input = $.trim($(this).val());
+    if(preInput !== input){
+      clearTimeout(preFunc);
+      preFunc = setTimeout(ajaxSearch(input), 500);
+    }
+    
+    var result = $("#search_result").html();
+      $("#form2").popover({
+        content: $("#search_result"),
+        placement: "bottom",
+        html: true,
+        trigger: "focus"
+      });
+      
+    if(input == ""){
+      $("#form2").popover("hide");
+    }else{
+      $("#form2").popover("show");
+    }
+    preInput = input;
+  });
+});
+</script>
