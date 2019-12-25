@@ -1,20 +1,12 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
 
-  get 'password_resets/edit'
+  get '/new', to:'posts#old'
+  get '/threads', to: 'posts#threads'
+  get '/thread/:id', to:'posts#thread'
 
-  get '/home', to:'static_pages#home'
-  get '/about', to:'static_pages#about'
-  get '/help', to:'static_pages#help'
-  get '/contact', to:'static_pages#contact'
+  root 'posts#index'
 
-  get '/signup', to:'users#new'
-
-  root 'posts#home'
-  get '/login', to:'sessions#new'
-  post '/login', to:'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
-  resources :posts, only: [:create, :destroy, :show, :index] do
+  resources :posts, only: [:show] do
     collection do
       get "search", "search_js"
     end
@@ -23,7 +15,6 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:edit, :update, :new, :create]
 

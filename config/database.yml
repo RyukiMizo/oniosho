@@ -1,28 +1,25 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+adapter: postgresql
+encoding: utf8
+# For details on connection pooling, see rails configuration guide
+# http://guides.rubyonrails.org/configuring.html#database-pooling
+pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+host: db
+username: postgres
+password:
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+<<: *default
+database: db/pocket_carbo_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+<<: *default
+database: db/pocket_carbo_test
+
+staging:
+<<: *default
+database: db/pocket_carbo_staging
 
 production:
-#半角スペース２個分の空白を開ける
-  <<: *default
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
+<<: *default
+database: db/pocket_carbo_production

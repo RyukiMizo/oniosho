@@ -2,7 +2,7 @@
   <div class="container">
     <nav class="nav-head">
     <%= link_to root_path do %>
-      <%= image_tag("logo3.png", size: '180x32',class: "logo") %>
+      <%= image_tag("oni.png", size: '80x80',class: "logo") %><span class="header-title">鬼の説法</span>
     <% end %>
     
       <ul class="nav navbar-nav navbar-right">
@@ -10,9 +10,9 @@
         <li class ="search">
           <div id="search-box">
             <%= form_tag(search_posts_path, method: :get, id: "form2",
-            :data => {:toggle=>"popover", :content => ""},) do %>
+            :data => {:toggle=>"popover", :content => "", :trigger => "focus"},) do %>
               <%= text_field_tag :search, "", id: "form1", class: "search__query", 
-              name: "keyword", placeholder: "俳句を検索",autocomplete: "off" %>
+              name: "keyword", placeholder: "キーワードで検索",autocomplete: "off" %>
               <div id="search_result"></div>
               <%= button_tag '検索', class: 'btn-gradient-3d-orange search-btn' %>
             <% end %>
@@ -20,33 +20,25 @@
         </li>
         
         <li class="home-use">
-          <%= link_to "ヘルプ", help_path %>
+          <%= link_to "鬼和尚について" %>
         </li>
         
-        <% if logged_in? %>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            アカウント <b class="caret"></b>
+            並び替え <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "プロフィール", current_user %></li>
-            <li><%= link_to "設定", edit_user_path(current_user) %></li>
-            <li class="divider"></li>
+            <li><%= link_to "鬼和尚の単発投稿" %></li>
+            <li><%= link_to "スレッドを選ぶ" %></li>
             <li>
-              <%= link_to "ログアウト", logout_path, method: :delete %>
+              <%= link_to "a" %>
             </li>
-        <% else %>
-          <li class="login">
-            <%= link_to login_path do %>
-              <i class="fas fa-sign-in-alt fa-x"></i>ログイン
-            <% end %>
-          </li>
           
           <li class="sign-up">
-            <%= link_to "新規登録", signup_path %>
+            <%= link_to "新規登録" %>
           </li>
           
-        <% end %>
+
       </ul>
     </nav>
   </div>
@@ -56,6 +48,10 @@
 <style>
   .logo3 {
     margin-left: 20px;
+    
+  }
+  .logo{
+    border-radius: 50%;
   }
 </style>
 

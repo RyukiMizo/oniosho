@@ -1,6 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 /* typography */
+.nav{
+  a { text-decoration: none; }
+}
+.header-title{
+  font-size: 30px;
+  font-family: serif;
+  margin-left: 30px;
+  text-decoration: none;
+  color: #FF6699;
+  
+}
 header{
   margin: 0;
 }
@@ -206,7 +217,8 @@ color: #666;/*検索ボタンマウスオーバー時のフォントカラー*/
 
 .popover {
   border-radius: 0;
-  width: 400px;
+  width: 700px;
+  overflow: scroll;
   
   .arrow{
     display: none;
@@ -214,7 +226,8 @@ color: #666;/*検索ボタンマウスオーバー時のフォントカラー*/
 }
 .popover-body {
   background: #fff;
-  padding: 0;
+  padding: 200px;
+  overflow: scroll;
   
 }
 .btn-gradient-3d-orange {
@@ -225,7 +238,7 @@ color: #666;/*検索ボタンマウスオーバー時のフォントカラー*/
   text-decoration: none;
   border-radius: 4px;
   color: #ffffff;
-  background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
+  background-image: linear-gradient(45deg, #FF6699 0%, #FF6699 100%);
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
   border-bottom: solid 3px #c58668;
 }
@@ -462,4 +475,26 @@ input.btn-circle-border-simple{
 #form2{
   height: 35px;
 }
+}
+
+.pagination{
+  margin-top: 40px;
+}
+.pagination >.active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #FF6699;
+    border-color: #FF6699;
+}
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.428571429;
+    color: #FF6699;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
 }

@@ -2,17 +2,22 @@ class PostsController < ApplicationController
   require 'nkf'
   before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user, only: :destroy
-  
-  def home
-    @post = current_user.posts.build if logged_in?
-  end
-  
+
   def index
-    @posts = Post.all.paginate(page: params[:page])
+    @posts = Post.all.paginate(page: params[:page], per_page: 50)
   end
+  
   
   def show
     @post = Post.find(params[:id])
+  end
+  
+  def thread
+    @title = params[:id]
+    @posts = Post.where(title: params[:id]).paginate(page: params[:page], per_page: 50)
+  end
+  
+  def threads
   end
   
   def create
@@ -42,11 +47,11 @@ class PostsController < ApplicationController
   end
   
   def search_js
-    @posts2 = Post.where('content LIKE(?)', "%#{search_params[:keyword]}%").order('content ASC').limit(6)
+    @posts2 = Post.where('content LIKE(?)', "%#{search_params[:keyword]}%").or(Post.where('oni_content LIKE(?)', "%#{search_params[:keyword]}%")).order('content ASC').limit(6)
   end
   
   def search_index
-    @posts1 = Post.where('content LIKE(?)', "%#{params[:id]}%").order('content ASC').limit(10).paginate(page: params[:page])
+    @posts1 = Post.where('content LIKE(?)', "%#{params[:id]}%").or(Post.where('oni_content LIKE(?)', "%#{search_params[:keyword]}%")).order('content ASC').limit(10).paginate(page: params[:page])
   end
   
 private
