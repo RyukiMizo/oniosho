@@ -41,7 +41,7 @@ gem "bootstrap-sass", '3.4.1'
 gem 'twitter'
 gem "jquery-rails"
 gem 'jquery-ui-rails'
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 #gem "mini_magick"
 gem 'will_paginate',           '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
